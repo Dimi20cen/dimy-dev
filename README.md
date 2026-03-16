@@ -1,6 +1,7 @@
 # dimy.dev
 
 Minimal personal portfolio built with Next.js (App Router).
+Project content is driven by a generated export from private HQ.
 
 ## Content model
 
@@ -9,10 +10,14 @@ The homepage intentionally stays simple:
 - Photo
 - Summary
 - Links (GitHub, LinkedIn)
-- Projects (stacked vertically)
+- Projects (from `data/projects.generated.json`, ordered by `sort_order`)
+- Dynamic project detail pages under `app/projects/[slug]/page.tsx`
 
 Core files:
-- `app/page.tsx`: page content and project items
+- `app/page.tsx`: homepage content and project cards
+- `data/projects.generated.json`: sanitized project export from HQ
+- `data/projects.ts`: project types and selectors
+- `scripts/sync-projects-from-hq.mjs`: validate and sync the HQ export into `data/`
 - `app/globals.css`: styling/theme
 - `public/photo.png`: profile photo
 
@@ -40,7 +45,25 @@ Run the full release gate:
 npm run gate
 ```
 
+## Sync projects from HQ
+
+After exporting the project catalog from HQ, sync the generated file into this repo:
+
+```bash
+npm run sync-projects
+```
+
+Defaults:
+- source: `../HQ/runtime/projects/projects.generated.json`
+- target: `data/projects.generated.json`
+
+Optional manual paths:
+
+```bash
+node scripts/sync-projects-from-hq.mjs /path/to/source.json /path/to/target.json
+```
+
 ## Tests
 
 This repo includes a lightweight smoke test in `tests/smoke.test.mjs` that checks
-the homepage source for required sections and key links.
+the homepage source, generated project data, dynamic project route, and HQ sync script.

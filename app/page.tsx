@@ -1,41 +1,14 @@
-const projects = [
-  {
-    title: "RentPredictor",
-    summary:
-      "Swiss rental price prediction using XGBoost with reproducible train/evaluate/predict scripts and a Streamlit interface.",
-    result: "MAE 347 CHF · RMSE 748 CHF · R2 0.786",
-    links: [
-      { label: "Demo", href: "/projects/rentpredictor" },
-      { label: "Source", href: "https://github.com/Dimi20cen/RentPredictor" }
-    ]
-  },
-  {
-    title: "HQ Tooling Platform",
-    summary:
-      "Built an internal command-center for tool orchestration and process control.",
-    links: [
-      { label: "Case Study", href: "#" },
-      { label: "Source", href: "#" }
-    ]
-  },
-  {
-    title: "Jobber Automation",
-    summary:
-      "Created browser-side job data extraction and workflow automation modules.",
-    links: [
-      { label: "Demo", href: "#" },
-      { label: "Source", href: "#" }
-    ]
-  },
-  {
-    title: "Microtools Lab",
-    summary:
-      "Designed and shipped rapid utility tools with tight user-feedback loops.",
-    links: [{ label: "futuretool.dimy.dev", href: "https://futuretool.dimy.dev" }]
-  }
-];
+import Link from "next/link";
+import { getPublicProjects } from "../data/projects";
+
+function primaryLabel(mode: string) {
+  if (mode === "full") return "Live App";
+  if (mode === "demo") return "Demo";
+  return "Project Page";
+}
 
 export default function HomePage() {
+  const projects = getPublicProjects();
   const personSchema = {
     "@context": "https://schema.org",
     "@type": "Person",
@@ -57,8 +30,8 @@ export default function HomePage() {
           </div>
         </div>
         <p className="hero-copy">
-          I build practical web products with a focus on speed, clarity, and
-          useful outcomes.
+          I build practical web products for daily life and then shape the best
+          parts of them into polished public experiences.
         </p>
         <div className="profile-links">
           <a href="https://github.com/dimydev" className="btn btn-ghost">
@@ -71,19 +44,31 @@ export default function HomePage() {
       </section>
 
       <section id="projects" className="section">
-        <h2>Projects</h2>
+        <div className="section-heading">
+          <div>
+            <p className="section-kicker">Projects</p>
+            <h2>Projects</h2>
+          </div>
+          <p className="section-copy">
+            Real tools I use and maintain, with the public view tuned for
+            friends, collaborators, and recruiters.
+          </p>
+        </div>
         <div className="project-grid">
           {projects.map((project) => (
-            <article key={project.title} className="project-card">
+            <article key={project.slug} className="project-card">
+              <div className="project-card-topline">
+                <span className="project-mode">{project.public_mode}</span>
+              </div>
               <h3>{project.title}</h3>
-              <p>{project.summary}</p>
-              {"result" in project ? <p className="result">{project.result}</p> : null}
+              <p>{project.public_summary}</p>
               <div className="project-links">
-                {project.links.map((link) => (
-                  <a key={link.label} href={link.href}>
-                    {link.label}
+                <Link href={`/projects/${project.slug}`}>{primaryLabel(project.public_mode)}</Link>
+                {project.repo_url ? (
+                  <a href={project.repo_url} target="_blank" rel="noreferrer">
+                    Source
                   </a>
-                ))}
+                ) : null}
               </div>
             </article>
           ))}

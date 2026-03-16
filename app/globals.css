@@ -158,6 +158,29 @@ h1 {
   padding: 1.6rem 0;
 }
 
+.section-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.section-kicker {
+  margin: 0 0 0.35rem;
+  color: var(--ink-soft);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-size: 0.74rem;
+}
+
+.section-copy {
+  margin: 0;
+  max-width: 44ch;
+  color: var(--ink-soft);
+  line-height: 1.55;
+}
+
 .section h2 {
   font-size: clamp(1.45rem, 2.5vw, 2rem);
   margin-bottom: 0.9rem;
@@ -173,9 +196,28 @@ h1 {
   background: rgba(255, 255, 255, 0.32);
   border: 1px solid var(--line);
   border-radius: 8px;
-  padding: 0.9rem;
+  padding: 1rem;
   display: grid;
   gap: 0.65rem;
+}
+
+.project-card-topline {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.project-mode {
+  display: inline-flex;
+  align-items: center;
+  min-height: 1.7rem;
+  padding: 0 0.7rem;
+  border-radius: 999px;
+  background: rgba(79, 123, 141, 0.13);
+  color: var(--ink);
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
 }
 
 .project-card p {
@@ -191,6 +233,7 @@ h1 {
 .project-links {
   display: flex;
   gap: 0.8rem;
+  flex-wrap: wrap;
   font-size: 0.95rem;
 }
 
@@ -202,17 +245,26 @@ h1 {
   font-weight: 500;
 }
 
-.demo-frame-wrap {
-  border: 1px solid var(--line);
-  border-radius: 10px;
-  overflow: hidden;
-  background: rgba(255, 255, 255, 0.3);
+.project-detail-hero {
+  display: grid;
+  gap: 1rem;
 }
 
-.demo-frame {
-  width: 100%;
-  min-height: 78vh;
-  border: 0;
+.project-note {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.3);
+  padding: 1rem;
+}
+
+.project-note p {
+  margin: 0;
+  color: var(--ink-soft);
+  line-height: 1.6;
+}
+
+.project-note p + p {
+  margin-top: 0.8rem;
 }
 
 @media (max-width: 760px) {
@@ -226,5 +278,10 @@ h1 {
 
   .profile-header {
     align-items: flex-start;
+  }
+
+  .section-heading {
+    align-items: start;
+    flex-direction: column;
   }
 }
