@@ -8,9 +8,13 @@ type ProjectPageProps = {
 };
 
 function primaryAction(project: ReturnType<typeof getProjectBySlug>) {
-  if (!project || !project.primary_url) return null;
+  if (!project) return null;
   if (project.public_mode === "full") return { href: project.primary_url, label: "Open live app" };
-  return { href: project.primary_url, label: "Open demo" };
+  if (project.public_mode === "demo") return { href: project.primary_url, label: "Open demo" };
+  if (project.public_mode === "source" && project.repo_url) {
+    return { href: project.repo_url, label: "View source code" };
+  }
+  return null;
 }
 
 export function generateStaticParams() {

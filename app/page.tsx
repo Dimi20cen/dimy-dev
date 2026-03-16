@@ -4,6 +4,7 @@ import { getPublicProjects } from "../data/projects";
 function primaryLabel(mode: string) {
   if (mode === "full") return "Live App";
   if (mode === "demo") return "Demo";
+  if (mode === "source") return "Source Code";
   return "Project Page";
 }
 
