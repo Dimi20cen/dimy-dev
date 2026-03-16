@@ -4,7 +4,6 @@ import { getPublicProjects } from "../data/projects";
 function primaryLabel(mode: string) {
   if (mode === "full") return "Live App";
   if (mode === "demo") return "Demo";
-  if (mode === "source") return "Source Code";
   return "Project Page";
 }
 
@@ -64,7 +63,9 @@ export default function HomePage() {
               <h3>{project.title}</h3>
               <p>{project.public_summary}</p>
               <div className="project-links">
-                <Link href={`/projects/${project.slug}`}>{primaryLabel(project.public_mode)}</Link>
+                {project.public_mode !== "source" ? (
+                  <Link href={`/projects/${project.slug}`}>{primaryLabel(project.public_mode)}</Link>
+                ) : null}
                 {project.repo_url ? (
                   <a href={project.repo_url} target="_blank" rel="noreferrer">
                     Source

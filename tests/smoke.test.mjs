@@ -28,6 +28,9 @@ test("homepage keeps core sections and data-driven project rendering", () => {
   for (const text of requiredText) {
     assert.ok(homeSource.includes(text), `Missing required text: ${text}`);
   }
+
+  assert.ok(homeSource.includes('project.public_mode !== "source"'));
+  assert.ok(!homeSource.includes('if (mode === "source") return "Source Code";'));
 });
 
 test("generated project export includes valid public projects", () => {
