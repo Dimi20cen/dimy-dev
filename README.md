@@ -11,6 +11,7 @@ The homepage intentionally stays simple:
 - Summary
 - Links (GitHub, LinkedIn)
 - Projects (from `data/projects.generated.json`, ordered by `sort_order`)
+  Each exported project must be in `demo` or `full` mode and include a valid public `primary_url`.
 - Dynamic project detail pages under `app/projects/[slug]/page.tsx`
 
 Core files:

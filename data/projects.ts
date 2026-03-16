@@ -1,6 +1,6 @@
 import projectsData from "./projects.generated.json";
 
-export type PublicMode = "none" | "docs" | "demo" | "full";
+export type PublicMode = "none" | "demo" | "full";
 
 export type ProjectRecord = {
   slug: string;

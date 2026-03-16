@@ -6,14 +6,23 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const repoRoot = resolve(__dirname, "..");
 const defaultSource = resolve(repoRoot, "../HQ/runtime/projects/projects.generated.json");
 const defaultTarget = resolve(repoRoot, "data/projects.generated.json");
-
-const sourcePath = process.argv[2] ? resolve(process.argv[2]) : defaultSource;
-const targetPath = process.argv[3] ? resolve(process.argv[3]) : defaultTarget;
-const allowedModes = new Set(["none", "docs", "demo", "full"]);
+const allowedModes = new Set(["none", "demo", "full"]);
 
 function assert(condition, message) {
   if (!condition) {
     throw new Error(message);
+  }
+}
+
+function isValidPublicUrl(value) {
+  if (typeof value !== "string" || value.trim().length === 0) {
+    return false;
+  }
+  try {
+    const parsed = new URL(value);
+    return parsed.protocol === "http:" || parsed.protocol === "https:";
+  } catch {
+    return false;
   }
 }
 
@@ -31,6 +40,10 @@ function validateProject(project, index) {
   assert(typeof project.repo_url === "string", `${prefix} repo_url must be a string.`);
   assert(Number.isInteger(project.sort_order), `${prefix} sort_order must be an integer.`);
   assert(project.public_mode !== "none", `${prefix} should not appear in the public export with mode 'none'.`);
+  assert(isValidPublicUrl(project.primary_url), `${prefix} primary_url must be a full http/https URL.`);
+  if (project.repo_url.trim().length > 0) {
+    assert(isValidPublicUrl(project.repo_url), `${prefix} repo_url must be a full http/https URL.`);
+  }
 }
 
 function main() {
@@ -54,6 +67,9 @@ function main() {
 
   console.log(`Synced ${data.length} projects from ${sourcePath} to ${targetPath}`);
 }
+
+const sourcePath = process.argv[2] ? resolve(process.argv[2]) : defaultSource;
+const targetPath = process.argv[3] ? resolve(process.argv[3]) : defaultTarget;
 
 try {
   main();

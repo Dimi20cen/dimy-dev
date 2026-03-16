@@ -8,14 +8,9 @@ type ProjectPageProps = {
 };
 
 function primaryAction(project: ReturnType<typeof getProjectBySlug>) {
-  if (!project) return null;
-  if (project.primary_url) {
-    if (project.public_mode === "full") return { href: project.primary_url, label: "Open live app" };
-    if (project.public_mode === "demo") return { href: project.primary_url, label: "Open demo" };
-    return { href: project.primary_url, label: "Open project" };
-  }
-  if (project.repo_url) return { href: project.repo_url, label: "View source" };
-  return null;
+  if (!project || !project.primary_url) return null;
+  if (project.public_mode === "full") return { href: project.primary_url, label: "Open live app" };
+  return { href: project.primary_url, label: "Open demo" };
 }
 
 export function generateStaticParams() {
@@ -66,21 +61,6 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
           </Link>
         </div>
       </section>
-
-      {project.public_mode === "docs" ? (
-        <section className="section">
-          <div className="project-note">
-            <p>
-              This project is part of my daily setup, so the public view is an
-              overview rather than the full runtime.
-            </p>
-            <p>
-              It stays here because it says something important about how I
-              build tools for real use, not just demos.
-            </p>
-          </div>
-        </section>
-      ) : null}
 
       {!action ? (
         <section className="section">
