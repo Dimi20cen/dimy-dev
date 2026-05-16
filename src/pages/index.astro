@@ -1,0 +1,23 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import SiteHeader from "../components/SiteHeader.astro";
+import About from "../components/About.astro";
+import ProjectGrid from "../components/ProjectGrid.astro";
+import WorkEducationTimeline from "../components/WorkEducationTimeline.astro";
+
+const projects = await getCollection("projects");
+const featuredProjects = projects
+  .filter((project) => project.data.featured)
+  .sort((a, b) => a.data.order - b.data.order)
+  .slice(0, 3);
+---
+
+<BaseLayout>
+  <SiteHeader />
+  <main>
+    <About />
+    <ProjectGrid projects={featuredProjects} heading="Projects" />
+    <WorkEducationTimeline />
+  </main>
+</BaseLayout>

@@ -1,0 +1,115 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { Image } from "astro:assets";
+import gsoc2023Screenshot from "../assets/screenshots/gsoc2023.png";
+import gsoc2025Screenshot from "../assets/screenshots/gsoc2025.png";
+import jobbyScreenshot from "../assets/screenshots/jobby.png";
+import minishellScreenshot from "../assets/screenshots/minishell.png";
+import rentPredictorScreenshot from "../assets/screenshots/rent-predictor.png";
+
+type ProjectGridProps = {
+  projects: CollectionEntry<"projects">[];
+  heading?: string;
+};
+
+const { projects, heading = "Featured projects" } = Astro.props as ProjectGridProps;
+const sortedProjects = [...projects].sort((firstProject, secondProject) => {
+  return firstProject.data.order - secondProject.data.order;
+});
+
+const projectScreenshotSources = {
+  "/screenshots/gsoc2023.png": gsoc2023Screenshot,
+  "/screenshots/gsoc2025.png": gsoc2025Screenshot,
+  "/screenshots/jobby.png": jobbyScreenshot,
+  "/screenshots/minishell.png": minishellScreenshot,
+  "/screenshots/rent-predictor.png": rentPredictorScreenshot
+};
+
+const hasProjectUrl = (projectUrl: string) => projectUrl.trim() !== "" && projectUrl !== "#";
+const getProjectScreenshotSource = (projectScreenshotUrl: string) => {
+  return projectScreenshotSources[projectScreenshotUrl as keyof typeof projectScreenshotSources] ?? projectScreenshotUrl;
+};
+
+const getProjectLinks = (project: CollectionEntry<"projects">) => {
+  return [
+    { label: "GitHub", href: project.data.sourceUrl },
+    { label: "Live", href: project.data.liveUrl },
+    { label: "Demo", href: project.data.demoUrl }
+  ].filter((projectLink) => hasProjectUrl(projectLink.href));
+};
+
+const getPrimaryProjectUrl = (project: CollectionEntry<"projects">) => {
+  const primaryProjectUrl = [project.data.liveUrl, project.data.demoUrl, project.data.sourceUrl].find((projectUrl) => {
+    return hasProjectUrl(projectUrl);
+  });
+
+  return primaryProjectUrl ?? "";
+};
+---
+
+<section class="projects-section" id="projects" aria-labelledby="projects-title">
+  <div class="section-heading">
+    <h2 id="projects-title">
+      <a href="/projects" class="section-title-with-arrow" aria-label="View all projects">
+      <span>{heading}</span>
+      <svg class="section-title-arrow" aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="#f1f5f9" fill-rule="evenodd" clip-rule="evenodd">
+        <path d="M21.883 12l-7.527 6.235.644.765 9-7.521-9-7.479-.645.764 7.529 6.236h-21.884v1h21.883z"></path>
+      </svg>
+      </a>
+    </h2>
+  </div>
+
+  <div class="project-grid">
+    {
+      sortedProjects.map((project, projectIndex) => {
+        const primaryProjectUrl = getPrimaryProjectUrl(project);
+        const projectLinks = getProjectLinks(project);
+        const projectImageLoadingStrategy = projectIndex < 2 ? "eager" : "lazy";
+
+        return (
+          <article class:list={["project-card", primaryProjectUrl && "project-card-clickable"]}>
+            {
+              primaryProjectUrl && (
+                <a
+                  class="project-card-overlay"
+                  href={primaryProjectUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`Open ${project.data.title}`}
+                ></a>
+              )
+            }
+            <div class="project-card-content">
+              <p class="project-date">{project.data.date}</p>
+              {
+                projectLinks.length > 0 && (
+                  <div class="project-links" aria-label={`${project.data.title} links`}>
+                    {projectLinks.map((projectLink) => (
+                      <a href={projectLink.href} target="_blank" rel="noopener noreferrer">{projectLink.label}</a>
+                    ))}
+                  </div>
+                )
+              }
+              <h3>{project.data.title}</h3>
+              <p>{project.data.summary}</p>
+
+            </div>
+            <div class="project-media">
+              <Image
+                class="project-image"
+                src={getProjectScreenshotSource(project.data.screenshotUrl)}
+                alt={project.data.screenshotAlt}
+                width={704}
+                height={396}
+                loading={projectImageLoadingStrategy}
+              />
+              <ul class="stack-list" aria-label={`${project.data.title} stack`}>
+                {project.data.stack.slice(0, 4).map((stackItem) => <li>{stackItem}</li>)}
+              </ul>
+            </div>
+          </article>
+        );
+      })
+    }
+  </div>
+</section>

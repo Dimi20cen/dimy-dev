@@ -1,0 +1,20 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import SiteHeader from "../../components/SiteHeader.astro";
+import ProjectGrid from "../../components/ProjectGrid.astro";
+
+const projects = await getCollection("projects");
+---
+
+<BaseLayout title="Projects | Dimitris">
+  <SiteHeader />
+  <main>
+    <section class="page-intro" aria-labelledby="projects-page-title">
+      <p class="hero-copy">
+        All my Projects are here!
+      </p>
+    </section>
+    <ProjectGrid projects={projects} heading="Projects" />
+  </main>
+</BaseLayout>

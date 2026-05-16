@@ -1,0 +1,33 @@
+[
+  {
+    "dates": "2025",
+    "title": "Software Engineer, Intern",
+    "organization": "Google Summer of Code - Learning Equality",
+    "summary": "Improved the Kolibri Windows app by reducing CPU usage by 90%, separating the UI and backend into independent processes, building installer/signing automation, and implementing upgrade/data-migration tooling."
+  },
+  {
+    "dates": "2024 - 2025",
+    "title": "Master of Science in Data Science",
+    "organization": "University of Colorado Boulder",
+    "summary": "Completed an online MS in Data Science focused on applied machine learning, statistical modeling, Python workflows, regression, model evaluation, and reproducible experimentation."
+  },
+  {
+    "dates": "2023",
+    "title": "Software Engineer, Intern",
+    "organization": "Google Summer of Code - Sugar Labs",
+    "summary": "Modernized multiple Python educational applications by migrating legacy code, fixing UI/runtime bugs, improving gameplay and responsiveness, and contributing merged pull requests across several open-source repositories."
+  },
+
+  {
+    "dates": "2021 - 2022",
+    "title": "Software Engineering Program",
+    "organization": "42 Network / 42 Wolfsburg",
+    "summary": "Studied systems programming, algorithms, C, and C++, including building a Unix-like shell with command parsing, pipes, redirection, environment variables, process control, and manual memory management."
+  },
+  {
+    "dates": "2017 - 2020",
+    "title": "Business Administration",
+    "organization": "University of Macedonia",
+    "summary": ""
+  }
+]
