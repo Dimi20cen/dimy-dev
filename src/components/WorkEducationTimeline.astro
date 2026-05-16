@@ -1,0 +1,47 @@
+---
+import experienceItems from "../data/experience.json";
+
+const visibleExperienceItems = experienceItems.slice(0, 4);
+const hiddenExperienceItems = experienceItems.slice(4);
+---
+
+<section class="timeline-section" id="work-education" aria-labelledby="timeline-title">
+  <div class="section-heading">
+    <p class="eyebrow">Work + Education</p>
+    <h2 id="timeline-title">Experience</h2>
+  </div>
+
+  <div class="timeline">
+    {
+      visibleExperienceItems.map((experienceItem) => (
+        <article class="timeline-item">
+          <div class="timeline-date">{experienceItem.dates}</div>
+          <div class="timeline-content">
+            <h3>{experienceItem.title}</h3>
+            <p class="timeline-organization">{experienceItem.organization}</p>
+            <p>{experienceItem.summary}</p>
+          </div>
+        </article>
+      ))
+    }
+    {
+      hiddenExperienceItems.length > 0 && (
+        <details class="timeline-more">
+          <summary>Show earlier experience</summary>
+          <div class="timeline-more-items">
+            {hiddenExperienceItems.map((experienceItem) => (
+              <article class="timeline-item">
+                <div class="timeline-date">{experienceItem.dates}</div>
+                <div class="timeline-content">
+                  <h3>{experienceItem.title}</h3>
+                  <p class="timeline-organization">{experienceItem.organization}</p>
+                  <p>{experienceItem.summary}</p>
+                </div>
+              </article>
+            ))}
+          </div>
+        </details>
+      )
+    }
+  </div>
+</section>

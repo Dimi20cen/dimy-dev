@@ -1,71 +1,54 @@
-# dimy.dev
+# Dimitris Portfolio
 
-Minimal personal portfolio built with Next.js (App Router).
-Project content is driven by a generated export from private HQ.
+Personal portfolio site for Dimitris, built with Astro.
 
-## Content model
+## What Is Inside
 
-The homepage intentionally stays simple:
-- Name
-- Photo
-- Summary
-- Links (GitHub, LinkedIn)
-- Projects (from `data/projects.generated.json`, ordered by `sort_order`)
-  Exported projects can be in `demo`, `full`, or `source` mode.
-  `demo` and `full` entries require a public `primary_url`; `source` entries require a public `repo_url`.
-- Dynamic project detail pages under `app/projects/[slug]/page.tsx`
+- Homepage with profile, featured projects, work, and education sections
+- Projects page generated from Markdown content
+- Shared data files for profile and experience content
+- Static assets for screenshots and site branding
 
-Core files:
-- `app/page.tsx`: homepage content and project cards
-- `data/projects.generated.json`: sanitized project export from HQ
-- `data/projects.ts`: project types and selectors
-- `scripts/sync-projects-from-hq.mjs`: validate and sync the HQ export into `data/`
-- `app/globals.css`: styling/theme
-- `public/photo.png`: profile photo
+## Project Structure
 
-## Run locally
+```text
+src/components/        Reusable Astro components
+src/content/projects/  Project case studies
+src/data/              Profile and experience data
+src/layouts/           Page layouts
+src/pages/             Site routes
+src/styles/            Global CSS
+public/                Static public assets
+```
 
-```bash
+## Commands
+
+Install dependencies:
+
+```sh
 npm install
+```
+
+Run locally:
+
+```sh
 npm run dev
 ```
 
-Open `http://localhost:3000`.
+Build for production:
 
-## Quality checks
-
-```bash
-npm run lint
-npm run typecheck
-npm run test
+```sh
 npm run build
 ```
 
-Run the full release gate:
+Preview the production build:
 
-```bash
-npm run gate
+```sh
+npm run preview
 ```
 
-## Sync projects from HQ
+## Editing Content
 
-After exporting the project catalog from HQ, sync the generated file into this repo:
-
-```bash
-npm run sync-projects
-```
-
-Defaults:
-- source: `../HQ/runtime/projects/projects.generated.json`
-- target: `data/projects.generated.json`
-
-Optional manual paths:
-
-```bash
-node scripts/sync-projects-from-hq.mjs /path/to/source.json /path/to/target.json
-```
-
-## Tests
-
-This repo includes a lightweight smoke test in `tests/smoke.test.mjs` that checks
-the homepage source, generated project data, dynamic project route, and HQ sync script.
+- Update personal details in `src/data/profile.json`
+- Update work and education entries in `src/data/experience.json`
+- Add or edit projects in `src/content/projects/`
